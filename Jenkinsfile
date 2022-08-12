@@ -11,4 +11,19 @@ node
  nodejs(nodeJSInstallationName: 'nodejs15.2.1') {
         sh 'npm install'
     }
- }  
+  stage("Docker Build"){
+  sh "docker build -t dockerafzal123/nodejs14 ."
+ }
+  stage("docker login and push"){
+  withCredentials([string(credentialsId: 'DOKCER_HUB_PASSWORD', variable: 'DOKCER_HUB_PASSWORD')]) {
+          sh "docker login -u dockerafzal123 -p ${DOKCER_HUB_PASSWORD}"
+  }
+   sh "docker push dockerafzal123/nodejs14"
+ }
+  stage("Deploy To Kuberates Cluster"){
+   
+  sh "kubectl apply -f nodejs.yml"
+   
+ }
+  
+}
