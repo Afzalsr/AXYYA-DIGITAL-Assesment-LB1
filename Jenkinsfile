@@ -8,7 +8,7 @@ node
  
  stage("Build")
  {
- nodejs(nodeJSInstallationName: 'nodejs15.2.1') {
+ nodejs(nodeJSInstallationName: 'nodejs14') {
         sh 'npm install'
     }
   stage("Docker Build"){
